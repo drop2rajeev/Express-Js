@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= pageTitle || "Express App" %></title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    .main-wrapper {
+      display: flex;
+      flex: 1;
+    }
+    main.content {
+      flex: 1;
+      padding: 20px;
+    }
+    aside.sidebar {
+      width: 250px;
+      background: #333;
+      color: white;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+    <header style="background:#007bff; color:white; padding: 1rem 2rem;">
+        <h1>My Express App</h1>
+    </header>
+
+  <div class="main-wrapper">
+    <% if (showSidebar) { %>
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="/" style="color:white;">Welcome</a></li>
+                    <li><a href="/home" style="color:white;">Home</a></li>
+                    <li><a href="/profile" style="color:white;">Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+    <% } %>
+
+    <main class="content">
+      <!-- CONTENT GOES HERE -->
+      <%- body %>
+    </main>
+  </div>
+
+  <footer style="background:#222; color:#bbb; padding: 1rem 2rem; text-align:center;">
+    &copy; <%= new Date().getFullYear() %> My Express App. All rights reserved.
+    </footer>
+</body>
+</html>

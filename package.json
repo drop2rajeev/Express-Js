@@ -1,0 +1,24 @@
+{
+  "name": "express-apps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "make:migration": "knex migrate:make --knexfile ./config/knexfile.js --env development",
+    "migrate": "knex migrate:latest --knexfile ./config/knexfile.js --env development",
+    "rollback": "knex migrate:rollback --knexfile ./config/knexfile.js --env development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^3.0.0",
+    "express": "^5.1.0",
+    "knex": "^3.1.0",
+    "mysql2": "^3.14.1"
+  }
+}
