@@ -1,5 +1,16 @@
-<% pageTitle = "Goasst", showSidebar = false; layout('layouts/master') %>
+<%
+    viewObject.pageTitle = "Goasst";
+    viewObject.showSidebar = true;
+    viewObject.pushStyle = ``;
+    viewObject.bodyContent = `
+        <h2>Welcome</h2>
+        <p>This is the welcome page ${viewObject.showSidebar ? "With" : "Without"} sidebar.</p>
+    `;
 
-<h2>Welcome to the Express App!</h2>
+    viewObject.pushScript = `
+        <script>
+            
+        </script>`;
 
-<p>This is the welcome page <%= showSidebar ? "With" : "Without" %> sidebar.</p>
+    layout('layouts/master');
+%>

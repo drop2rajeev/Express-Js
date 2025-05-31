@@ -13,7 +13,6 @@ module.exports = function configureViews(appService) {
   // Set the directory where view templates are located
   appService.set('views', path.join(global.__basedir, 'resources/views'));
 
-  // Set global template variables available in all views
-  appService.locals.pageTitle = "";      // Default page title
-  appService.locals.showSidebar = false; // Toggle sidebar visibility
+  // Initialize a shared 'viewObject' object in app locals to hold global variables accessible in all views
+  appService.locals.viewObject = {};
 };

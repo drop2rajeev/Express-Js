@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title><%= pageTitle || "Express App" %></title>
-  <style>
-    body {
-      margin: 0; padding: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
-    .main-wrapper {
-      display: flex;
-      flex: 1;
-    }
-    main.content {
-      flex: 1;
-      padding: 20px;
-    }
-    aside.sidebar {
-      width: 250px;
-      background: #333;
-      color: white;
-      padding: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%- viewObject.pageTitle || 'GNM Exam' %></title>
+    <link href="/public/designs/css/bootstrap@5.3.3.min.css" rel="stylesheet">
+    <!-- Local Font Awesome -->
+    <link rel="stylesheet" href="/public/designs/fontawesome-6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="/public/designs/css/custom.css">
+    <!-- Page-specific styles -->
+    <%- viewObject.pushStyle || '' %>
 </head>
 <body>
     <header style="background:#007bff; color:white; padding: 1rem 2rem;">
         <h1>My Express App</h1>
     </header>
 
-  <div class="main-wrapper">
-    <% if (showSidebar) { %>
+    <div class="main-wrapper content">
+      <% if (viewObject.showSidebar) { %>
         <aside class="sidebar">
             <nav>
                 <ul>
@@ -43,16 +28,23 @@
                 </ul>
             </nav>
         </aside>
-    <% } %>
+      <% } %>
 
-    <main class="content">
-      <!-- CONTENT GOES HERE -->
-      <%- body %>
-    </main>
+      <main class="content">
+        <!-- CONTENT GOES HERE -->
+        <%- viewObject.bodyContent || body %>
+      </main>
   </div>
-
   <footer style="background:#222; color:#bbb; padding: 1rem 2rem; text-align:center;">
     &copy; <%= new Date().getFullYear() %> My Express App. All rights reserved.
-    </footer>
+  </footer>
+
+  <!-- Global scripts -->
+  <script src="/public/designs/js/jquery-3.7.1.js"></script>
+  <script src="/public/designs/js/bootstrap@5.3.3.min.js"></script>
+  <!-- Page-specific scripts -->
+   <script>
+   </script>
+  <%- viewObject.pushScript || '' %>
 </body>
 </html>
