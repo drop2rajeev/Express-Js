@@ -1,38 +1,41 @@
 const fs = require('fs');
 
-module.exports = function (controllerName) {
-  const controllersRoot = path.join(__rootDir, 'app/Http/Controllers');
-  const parts = controllerName.split('/');
-  const fileName = parts.pop();
-  const className = fileName.replace(/[^a-zA-Z0-9]/g, '');
-  const properClassName = className.charAt(0).toUpperCase() + className.slice(1);
+module.exports = function (name) {
+  const controllerBasePath = path.join(__rootDir, 'app/Http/Controllers');
+  const filePath = path.join(controllerBasePath, `${name}.js`);
+  const dirPath = path.dirname(filePath);
 
-  const dirPath = path.join(controllersRoot, ...parts);
-  const filePath = path.join(dirPath, `${properClassName}.js`);
-
-  // Create the directory if it doesn't exist
+  // Create directory if it doesn't exist
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
   }
 
-  // Prevent overwriting existing controllers
   if (fs.existsSync(filePath)) {
-    console.log(`❌ Controller "${controllerName}" already exists.`);
+    console.log(`❌ Controller "${name}" already exists.`);
     return;
   }
 
-  const content = `
-    const Controller = require('${path.relative(dirPath, path.join(__rootDir, 'app/Core/Controller'))}');
+  // Get class name from filename
+  const parts = name.split('/');
+  const className = parts[parts.length - 1].replace(/[^a-zA-Z0-9]/g, '');
+  const controllerClassName = className.charAt(0).toUpperCase() + className.slice(1);
 
-    class ${properClassName} extends Controller {
+  // Calculate relative path from new controller to Controller.js
+  const relativePathToBase = path.relative(dirPath, path.join(__rootDir, 'app/Http/Controllers/Controller'));
+
+  // Template content
+  const template = `
+    const Controller = require('${relativePathToBase.replace(/\\/g, '/')}');
+
+    class ${controllerClassName} extends Controller {
       index(req, res) {
-        res.send('Hello from ${properClassName} Controller!');
+        return this.success(res, {}, '${controllerClassName} index loaded');
       }
     }
 
-    module.exports = new ${properClassName}();
+    module.exports = new ${controllerClassName}();
   `;
 
-  fs.writeFileSync(filePath, content.trimStart());
-  console.log(`✅ Controller created: ${filePath}`);
+  fs.writeFileSync(filePath, template.trimStart());
+  console.log(`✅ Controller "${name}" created at: ${filePath}`);
 };

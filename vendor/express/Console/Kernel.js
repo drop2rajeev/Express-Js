@@ -12,42 +12,42 @@ const commandConfigs = [
     validate: (args) => args?.length,
     transform: (args) => args.join('/')
   },
-  {
-    name: 'make:model',
-    args: '[nameParts...]',
-    description: 'Generate a model',
-    handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeModel')),
-    validate: (args) => args?.length,
-    transform: (args) => args.join('/')
-  },
-  {
-    name: 'make:view',
-    args: '[nameParts...]',
-    description: 'Generate a view',
-    handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeView')),
-    validate: (args) => args?.length,
-    transform: (args) => args.join('/')
-  },
-  {
-    name: 'make:migration',
-    args: '<name>',
-    description: 'Create a new migration file',
-    handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeMigration')),
-    validate: (arg) => !!arg,
-    transform: (arg) => arg
-  },
-  {
-    name: 'migrate',
-    args: '',
-    description: 'Run all migrations',
-    handler: () => runKnex(`npx knex migrate:latest --knexfile ${knexFile} --env development`)
-  },
-  {
-    name: 'rollback',
-    args: '',
-    description: 'Rollback last migration',
-    handler: () => runKnex(`npx knex migrate:rollback --knexfile ${knexFile} --env development`)
-  }
+//   {
+//     name: 'make:model',
+//     args: '[nameParts...]',
+//     description: 'Generate a model',
+//     handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeModel')),
+//     validate: (args) => args?.length,
+//     transform: (args) => args.join('/')
+//   },
+//   {
+//     name: 'make:view',
+//     args: '[nameParts...]',
+//     description: 'Generate a view',
+//     handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeView')),
+//     validate: (args) => args?.length,
+//     transform: (args) => args.join('/')
+//   },
+//   {
+//     name: 'make:migration',
+//     args: '<name>',
+//     description: 'Create a new migration file',
+//     handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeMigration')),
+//     validate: (arg) => !!arg,
+//     transform: (arg) => arg
+//   },
+//   {
+//     name: 'migrate',
+//     args: '',
+//     description: 'Run all migrations',
+//     handler: () => runKnex(`npx knex migrate:latest --knexfile ${knexFile} --env development`)
+//   },
+//   {
+//     name: 'rollback',
+//     args: '',
+//     description: 'Rollback last migration',
+//     handler: () => runKnex(`npx knex migrate:rollback --knexfile ${knexFile} --env development`)
+//   }
 ];
 
 const runKnex = (cmd) => {
