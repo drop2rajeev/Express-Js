@@ -45,12 +45,12 @@ const commandConfigs = [
     description: 'Run all migrations',
     handler: () => runKnex(`npx knex migrate:latest --knexfile ${knexFile} --env development`)
   },
-//   {
-//     name: 'rollback',
-//     args: '',
-//     description: 'Rollback last migration',
-//     handler: () => runKnex(`npx knex migrate:rollback --knexfile ${knexFile} --env development`)
-//   }
+  {
+    name: 'migrate:rollback',
+    args: '',
+    description: 'Rollback last migration',
+    handler: () => runKnex(`npx knex migrate:rollback --knexfile ${knexFile} --env development`)
+  }
 ];
 
 const runKnex = (cmd) => {

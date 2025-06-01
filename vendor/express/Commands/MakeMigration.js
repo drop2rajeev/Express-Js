@@ -1,62 +1,58 @@
 const fs = require('fs');
+const path = require('path');
 const dedent = require('dedent');
 const pluralize = require('pluralize');
 
 module.exports = function (name) {
-    const migrationsBasePath = path.join(__rootDir, 'database/migrations');
+  const migrationsDir = path.join(__rootDir, 'database/migrations');
 
-    const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, '').slice(0, 14);
-    const fileName = `${timestamp}_${name}.js`;
-    const filePath = path.join(migrationsBasePath, fileName);
+  if (!name) {
+    console.log('❌ Migration name is required.');
+    return;
+  }
 
-    if (!fs.existsSync(migrationsBasePath)) {
-        fs.mkdirSync(migrationsBasePath, { recursive: true });
+  // Ensure migrations directory exists
+  if (!fs.existsSync(migrationsDir)) {
+    fs.mkdirSync(migrationsDir, { recursive: true });
+  }
+
+  const timestamp = new Date().toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);
+  const tableName = pluralize(name.toLowerCase());
+  const fileName = `${timestamp}_${tableName}.js`;
+  const filePath = path.join(migrationsDir, fileName);
+
+  // Check if migration already exists for the table
+  const existing = fs.readdirSync(migrationsDir).find(f => f.includes(`_${tableName}.js`));
+  if (existing) {
+    console.log(`❌ Migration for table "${tableName}" already exists: ${existing}`);
+    return;
+  }
+
+  // Generate a valid class name (PascalCase + Migration suffix)
+  const className = name
+    .split(/[^a-zA-Z0-9]/)
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join('') + 'Migration';
+
+  const template = dedent(`
+    class ${className} {
+      async up(knex) {
+        return knex.schema.createTable('${tableName}', (table) => {
+          table.increments('id').primary();
+          // Other Colums
+          table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable();
+          table.specificType('updated_at', 'TIMESTAMP').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')).notNullable();
+        });
+      }
+
+      async down(knex) {
+        return knex.schema.dropTable('${tableName}');
+      }
     }
 
-    // Convert snake_case migration name to CamelCase class name
-    const className = name.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+    module.exports = new ${className}();
+  `);
 
-    let baseName = name;
-    if (name.startsWith('create_') && name.endsWith('_table')) {
-        baseName = name.replace(/^create_/, '').replace(/_table$/, '');
-    }
-    // Get plural table name
-    const tableName = pluralize(baseName);
-
-    const template = dedent(`
-        module.exports = {
-            async up(queryInterface, Sequelize) {
-                await queryInterface.createTable('${tableName}', {
-                    id: {
-                        type: Sequelize.INTEGER,
-                        primaryKey: true,
-                        autoIncrement: true,
-                        allowNull: false,
-                    },
-                    createdAt: {
-                        type: Sequelize.DATE,
-                        allowNull: false,
-                        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-                    },
-                    updatedAt: {
-                        type: Sequelize.DATE,
-                        allowNull: false,
-                        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-                    }
-                });
-
-                // Add ON UPDATE CURRENT_TIMESTAMP to updatedAt column
-                await queryInterface.sequelize.query(
-                    'ALTER TABLE \`${tableName}\` MODIFY \`updatedAt\` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;'
-                );
-            },
-
-            async down(queryInterface, Sequelize) {
-                await queryInterface.dropTable('${tableName}');
-            }
-        };
-    `);
-
-    fs.writeFileSync(filePath, template.trimStart());
-    console.log(`✅ Migration "${name}" created at: ${filePath}`);
+  fs.writeFileSync(filePath, template.trimStart());
+  console.log(`✅ Migration created: ${fileName}`);
 };
