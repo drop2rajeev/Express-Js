@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 
 // Import controller
-const APIController = require(path.join(__basedir, 'app/Controllers/API/APIController'));
+const APIController = require(path.join(__rootDir, 'app/Http/Controllers/API/APIController'));
 
 // Define routes
 router.get('/', APIController.index);

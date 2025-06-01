@@ -1,6 +1,8 @@
+// Load global rootPath and path
+require('./rootDir');
+
 const { program } = require('commander');
 const { execSync } = require('child_process');
-const path = require('path');
 
 // ---- Custom Commands ----
 program.command('make:view [nameParts...]').description('Generate a view file').action((nameParts) => {
@@ -38,7 +40,8 @@ const runKnex = (cmd) => {
     console.error('Error:', e.message);
   }
 };
-const knexFile = path.join(__basedir, 'vendor/express/knexfile.js');
+
+const knexFile = path.join(__rootDir, 'vendor/express/database/knexfile.js');
 program.command('make:migration <name>').description('Create a new migration file').action((name) => {
   const cmd = `npx knex migrate:make ${name} --knexfile ${knexFile} --env development`;
   runKnex(cmd)

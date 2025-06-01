@@ -1,2 +1,1 @@
-#!/usr/bin/env node
-require('./vendor/express/console');
+require('./vendor/express/Console/Kernel').run(process.argv.slice(2));

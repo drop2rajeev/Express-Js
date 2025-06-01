@@ -1,24 +1,23 @@
 const express = require('express');
-const path = require('path');
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config(); // Load environment variables
 
 // Initialize Express application instance
 const appService = express();
 
 // Setup database connection using Knex
-const knexConfig = require(path.join(__basedir, 'config/database'));
+const knexConfig = require(path.join(__rootDir, 'config/database'));
 const knex = require('knex')(knexConfig.dbConnection);
 
-// Make knex instance available throughout the app via app.locals
+// Make knex instance available throughout the app
 appService.locals.knex = knex;
 
-// Register routes by requiring RouteServiceProvider and passing appService instance
-require(path.join(__basedir, 'app/Providers/RouteServiceProvider'))(appService);
+// Register routes
+require(path.join(__rootDir, 'app/Providers/RouteServiceProvider'))(appService);
 
-// Register view engine and related setup by passing appService instance
-require(path.join(__basedir, 'app/Providers/ViewServiceProvider'))(appService);
+// Register view engine and setup
+require(path.join(__rootDir, 'app/Providers/ViewServiceProvider'))(appService);
 
-// Middleware to parse incoming JSON requests
+// Middleware to parse JSON requests
 appService.use(express.json());
 
 // Export the configured Express app instance

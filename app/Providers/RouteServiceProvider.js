@@ -1,10 +1,3 @@
-const path = require('path');
-
-/**
- * Register web and API routes to the Express app instance
- * @param {import('express').Express} appService
- */
-
 module.exports = function registerRoutes(appService) {
   // Define base paths and corresponding route files (relative to project root)
   const routes = [
@@ -15,7 +8,7 @@ module.exports = function registerRoutes(appService) {
   // Loop through each route group and mount it to the app
   routes.forEach(({ path: basePath, files }) => {
     files.forEach(file => {
-      const fullPath = path.join(__basedir, file);
+      const fullPath = require('path').join(__rootDir, file);
       appService.use(basePath, require(fullPath));
     });
   });
