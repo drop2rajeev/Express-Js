@@ -11,7 +11,7 @@ module.exports = function configureViews(appService) {
   appService.set('view engine', 'ejs');
 
   // Set the directory where view templates are located
-  appService.set('views', path.join(global.__basedir, 'resources/views'));
+  appService.set('views', path.join(__basedir, 'resources/views'));
 
   // Initialize a shared 'viewObject' object in app locals to hold global variables accessible in all views
   appService.locals.viewObject = {};

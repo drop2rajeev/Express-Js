@@ -15,7 +15,7 @@ module.exports = function registerRoutes(appService) {
   // Loop through each route group and mount it to the app
   routes.forEach(({ path: basePath, files }) => {
     files.forEach(file => {
-      const fullPath = path.join(global.__basedir, file);
+      const fullPath = path.join(__basedir, file);
       appService.use(basePath, require(fullPath));
     });
   });

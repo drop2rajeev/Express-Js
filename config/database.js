@@ -6,7 +6,7 @@ const path = require('path');
 // Shared migration configuration
 const migrations = {
   migrations: {
-    directory: path.join(global.__basedir, 'database/migrations')
+    directory: path.join(__basedir, 'database/migrations')
   }
 };
 
