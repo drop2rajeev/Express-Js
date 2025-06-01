@@ -13,22 +13,22 @@ const commandConfigs = [
     validate: (args) => args?.length,
     transform: (args) => args.join('/')
   },
-//   {
-//     name: 'make:model',
-//     args: '[nameParts...]',
-//     description: 'Generate a model',
-//     handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeModel')),
-//     validate: (args) => args?.length,
-//     transform: (args) => args.join('/')
-//   },
-//   {
-//     name: 'make:view',
-//     args: '[nameParts...]',
-//     description: 'Generate a view',
-//     handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeView')),
-//     validate: (args) => args?.length,
-//     transform: (args) => args.join('/')
-//   },
+  {
+    name: 'make:model',
+    args: '[nameParts...]',
+    description: 'Generate a model',
+    handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeModel')),
+    validate: (args) => args?.length,
+    transform: (args) => args.join('/')
+  },
+  {
+    name: 'make:view',
+    args: '[nameParts...]',
+    description: 'Generate a view',
+    handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeView')),
+    validate: (args) => args?.length,
+    transform: (args) => args.join('/')
+  },
 //   {
 //     name: 'make:migration',
 //     args: '<name>',

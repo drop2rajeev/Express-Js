@@ -1,4 +1,5 @@
 const fs = require('fs');
+const dedent = require('dedent');
 
 module.exports = function (name) {
   const controllerBasePath = path.join(__rootDir, 'app/Http/Controllers');
@@ -21,11 +22,14 @@ module.exports = function (name) {
   const controllerClassName = className.charAt(0).toUpperCase() + className.slice(1);
 
   // Calculate relative path from new controller to Controller.js
-  const relativePathToBase = path.relative(dirPath, path.join(__rootDir, 'app/Http/Controllers/Controller'));
+  let relativePathToBase = path.relative(dirPath, path.join(__rootDir, 'app/Http/Controllers/Controller')).replace(/\\/g, '/');
+  if (!relativePathToBase.startsWith('.')) {
+    relativePathToBase = './' + relativePathToBase;
+  }
 
   // Template content
-  const template = `
-    const Controller = require('${relativePathToBase.replace(/\\/g, '/')}');
+  const template = dedent(`
+    const Controller = require('${relativePathToBase}');
 
     class ${controllerClassName} extends Controller {
       index(req, res) {
@@ -34,7 +38,7 @@ module.exports = function (name) {
     }
 
     module.exports = new ${controllerClassName}();
-  `;
+  `);
 
   fs.writeFileSync(filePath, template.trimStart());
   console.log(`✅ Controller "${name}" created at: ${filePath}`);
