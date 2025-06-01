@@ -1,6 +1,3 @@
-// Load environment variables
-require('dotenv').config();
-
 // Shared migration configuration
 const migrations = {
   migrations: {

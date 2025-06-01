@@ -2,6 +2,8 @@ require('../../../rootDir'); // Load global __rootDir
 
 const { program } = require('commander');
 const { execSync } = require('child_process');
+require('dotenv').config(); // Load Env Varibales
+
 const knexFile = path.join(__rootDir, 'vendor/express/database/knexfile.js');
 
 const commandConfigs = [
@@ -29,20 +31,20 @@ const commandConfigs = [
     validate: (args) => args?.length,
     transform: (args) => args.join('/')
   },
-//   {
-//     name: 'make:migration',
-//     args: '<name>',
-//     description: 'Create a new migration file',
-//     handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeMigration')),
-//     validate: (arg) => !!arg,
-//     transform: (arg) => arg
-//   },
-//   {
-//     name: 'migrate',
-//     args: '',
-//     description: 'Run all migrations',
-//     handler: () => runKnex(`npx knex migrate:latest --knexfile ${knexFile} --env development`)
-//   },
+  {
+    name: 'make:migration',
+    args: '<name>',
+    description: 'Create a new migration file',
+    handler: require(path.join(__rootDir, 'vendor/express/Commands/MakeMigration')),
+    validate: (arg) => !!arg,
+    transform: (arg) => arg
+  },
+  {
+    name: 'migrate',
+    args: '',
+    description: 'Run all migrations',
+    handler: () => runKnex(`npx knex migrate:latest --knexfile ${knexFile} --env development`)
+  },
 //   {
 //     name: 'rollback',
 //     args: '',
