@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function(name) {
-  const viewsBase = path.join(__dirname, '../../../resources/views');
+  const viewsBase = path.join(__basedir, 'resources/views');
   const filePath = path.join(viewsBase, `${name}.ejs`);
   const dir = path.dirname(filePath);
 

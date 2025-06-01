@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function(name) {
-  const modelsBase = path.join(__dirname, '../../../app/Models');
+  const modelsBase = path.join(__basedir, 'app/Models');
   const filePath = path.join(modelsBase, `${name}.js`);
   const dir = path.dirname(filePath);
 

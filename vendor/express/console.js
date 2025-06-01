@@ -38,7 +38,7 @@ const runKnex = (cmd) => {
     console.error('Error:', e.message);
   }
 };
-const knexFile = path.join(__dirname, 'knexfile.js');
+const knexFile = path.join(__basedir, 'vendor/express/knexfile.js');
 program.command('make:migration <name>').description('Create a new migration file').action((name) => {
   const cmd = `npx knex migrate:make ${name} --knexfile ${knexFile} --env development`;
   runKnex(cmd)

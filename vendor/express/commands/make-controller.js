@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function(name) {
-  const controllersBase = path.join(__dirname, '../../../app/Controllers');
+  const controllersBase = path.join(__basedir, 'app/Controllers');
   const filePath = path.join(controllersBase, `${name}.js`);
   const dir = path.dirname(filePath);
 
@@ -19,7 +19,7 @@ module.exports = function(name) {
   // Derive class name from last part of the path
   const parts = name.split('/');
   const className = parts[parts.length - 1].replace(/[^a-zA-Z0-9]/g, '');
-  const controllerClassName = className.charAt(0).toUpperCase() + className.slice(1) + 'Controller';
+  const controllerClassName = className.charAt(0).toUpperCase() + className.slice(1);
 
   const template = `
     // ${controllerClassName}
