@@ -1,7 +1,8 @@
 // Shared migration configuration
 const migrations = {
   migrations: {
-    directory: path.join(__rootDir, 'database/migrations')
+    directory: path.join(__rootDir, 'database/migrations'),
+    tableName: 'migrations' // Knex generating default knex_migrations, so renaming to migrations
   }
 };
 
