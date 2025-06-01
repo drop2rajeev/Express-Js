@@ -1,1 +1,1 @@
-require('./vendor/express/Console/Kernel').run(process.argv.slice(2));
+require('./vendor/express/Console/Kernel');

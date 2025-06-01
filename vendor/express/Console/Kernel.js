@@ -2,6 +2,7 @@ require('../../../rootDir'); // Load global __rootDir
 
 const { program } = require('commander');
 const { execSync } = require('child_process');
+const knexFile = path.join(__rootDir, 'vendor/express/database/knexfile.js');
 
 const commandConfigs = [
   {
