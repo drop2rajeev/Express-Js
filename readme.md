@@ -51,16 +51,13 @@ A Node.js project using **Express**, **Knex**, and **EJS** with Laravel-inspired
 ## 3. Database Migrations (Using Knex.js)
 
 - Create a new migration file:
-
-    npm run make:migration -- create_users_table
+    node artisan make:migration tableName
 
 - Run all pending migrations:
-
-    npm run migrate
+    node artisan migrate
 
 - Rollback the last batch of migrations:
-
-    npm run rollback
+    node artisan migrate:rollback
 ---
 
 ## 4. Start the Project
@@ -87,33 +84,39 @@ A Node.js project using **Express**, **Knex**, and **EJS** with Laravel-inspired
 
     express-apps/
     ├── app/                    # Controllers and business logic
+    │   └── Http/
+    │       └── Controllers/    # Controller files
     ├── config/
-    │   ├── database.js         # DB connection configs
-    │   └── knexfile.js         # Knex CLI config
+    │   └── database.js         # DB connection configs
     ├── database/
     │   └── migrations/         # Migration files
-    ├── public/                 # Static files
+    ├── public/                 # Static files (css, js, images)
     ├── resources/
-    │   └── views/              # EJS templates
+    │   └── views/              # EJS (or other) template files
     ├── routes/
     │   ├── web.js              # Web routes
-    │   ├── api.js              # API routes
-    ├── .env                    # Environment config
-    ├── app.js                  # Express app setup
+    │   └── api.js              # API routes
+    ├── vendor/
+    │   └── express/            # Custom framework/vendor files, e.g., database, eloquent, etc.
+    ├── .env                    # Environment variables
     ├── server.js               # Server entry point
-    ├── package.json            # NPM scripts & dependencies
-    └── README.md               # This file
+    ├── package.json            # NPM scripts and dependencies
+    └── README.md               # Project documentation
+
 
 ---
 
 ## 7. Helpful Scripts (package.json)
 
-| Command                   | Description                          |
-|---------------------------|------------------------------------|
-| `npm start`               | Start Express server                |
-| `npm run make:migration`  | Create new migration file           |
-| `npm run migrate`         | Run migrations                      |
-| `npm run rollback`        | Rollback last migration batch      |
+| Command                                            | Description                        |
+|----------------------------------------------------|------------------------------------|
+| `npm start`                                        | Start Express server               |
+| `node artisan make:migration tableName`            | Create new migration file          |
+| `node artisan migrate`                             | Run migrations                     |
+| `node artisan migrate:rollback`                    | Rollback last migration batch      |
+| `node artisan make:controller controllerName`      | Rollback last migration batch      |
+| `node artisan make:model modelName`                | Rollback last migration batch      |
+| `node artisan make:view viewName`                  | Rollback last migration batch      |
 
 ---
 
