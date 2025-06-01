@@ -1,0 +1,17 @@
+<form method="POST" action="/login">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  
+  <!-- Email -->
+  <div class="mb-3">
+    <label>Email</label>
+    <input type="email" name="email" class="form-control" required>
+  </div>
+
+  <!-- Password -->
+  <div class="mb-3">
+    <label>Password</label>
+    <input type="password" name="password" class="form-control" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Login</button>
+</form>

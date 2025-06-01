@@ -32,6 +32,14 @@ const commandConfigs = [
     transform: (args) => args.join('/')
   },
   {
+    name: 'key:generate',
+    args: '',
+    description: 'Generate and update APP_KEY in .env',
+    handler: require(path.join(__rootDir, 'vendor/express/Commands/KeyGenerate')),
+    validate: () => true,    // no arguments, always valid
+    transform: (args) => ''  // no transformation needed
+  },
+  {
     name: 'make:migration',
     args: '<name>',
     description: 'Create a new migration file',

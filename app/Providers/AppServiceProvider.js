@@ -1,5 +1,8 @@
-const express = require('express');
 require('dotenv').config(); // Load environment variables
+const express = require('express');
+const csrfMiddleware = require('../Middleware/CSRFProtection');
+const session = require('express-session');
+const csurf = require('csurf');
 
 // Initialize Express application instance
 const appService = express();
@@ -17,8 +20,21 @@ require(path.join(__rootDir, 'app/Providers/RouteServiceProvider'))(appService);
 // Register view engine and setup
 require(path.join(__rootDir, 'app/Providers/ViewServiceProvider'))(appService);
 
-// Middleware to parse JSON requests
-appService.use(express.json());
+// Middleware
+appService.use(express.json()); // To parse JSON requests
+
+makeAvailableCsrfToken(appService);
+function makeAvailableCsrfToken(appService){
+    // Session setup (required before CSRF)
+    appService.use(session({
+        secret: process.env.APP_KEY || '',
+        resave: false,
+        saveUninitialized: true
+    }));
+
+    appService.use(csurf()); // CSRF protection
+    appService.use(csrfMiddleware); // Apply CSRF protection with exceptions
+}
 
 // Export the configured Express app instance
 module.exports = appService;

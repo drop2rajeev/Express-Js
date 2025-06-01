@@ -25,7 +25,6 @@ A Node.js project using **Express**, **Knex**, and **EJS** with Laravel-inspired
     
     # Application settings
     APP_URL=127.0.0.1
-    APP_PORT=3000
 
     # Select your database driver: mysql | pgsql | sqlite
     DB_CONNECTION=mysql
@@ -117,6 +116,7 @@ A Node.js project using **Express**, **Knex**, and **EJS** with Laravel-inspired
 | `node artisan make:controller controllerName`      | Rollback last migration batch      |
 | `node artisan make:model modelName`                | Rollback last migration batch      |
 | `node artisan make:view viewName`                  | Rollback last migration batch      |
+| `node artisan key:generate`                        | Generate a new Application key     |
 
 ---
 
