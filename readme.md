@@ -109,7 +109,7 @@ A Node.js project using **Express**, **Knex**, and **EJS** with Laravel-inspired
 
 | Command                                            | Description                        |
 |----------------------------------------------------|------------------------------------|
-| `npm start`                                        | Start Express server               |
+| `node artisan serve`                               | Start Express server               |
 | `node artisan make:migration tableName`            | Create new migration file          |
 | `node artisan migrate`                             | Run migrations                     |
 | `node artisan migrate:rollback`                    | Rollback last migration batch      |

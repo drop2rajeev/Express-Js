@@ -58,6 +58,12 @@ const commandConfigs = [
     args: '',
     description: 'Rollback last migration',
     handler: () => runKnex(`npx knex migrate:rollback --knexfile ${knexFile} --env development`)
+  },
+  {
+    name: 'serve',
+    args: '',
+    description: 'To Start the Project',
+    handler: () => require('../../../server.js')
   }
 ];
 
